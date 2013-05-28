@@ -1,0 +1,5 @@
+default:
+  css:
+    bootstrap.css:
+      local: css/bootstrap.css
+2.0.4: null

@@ -1,0 +1,27 @@
+{
+    "name": "nilead/loader-bundle",
+    "type": "symfony-bundle",
+    "description": "The \"Nilead CSS/JS Loader Bundle\"",
+    "authors": [
+        {
+            "name": "Raine Ng",
+            "email": "vunguyen@rubikin.com",
+            "homepage": "http://rubikin.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.*",
+        "mrclay/minify": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Nilead\\LoaderBundle": "" }
+    },
+    "target-dir": "Nilead/LoaderBundle",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.0.x-dev"
+        }
+    }
+}

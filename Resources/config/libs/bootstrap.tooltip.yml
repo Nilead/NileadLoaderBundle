@@ -1,0 +1,8 @@
+default:
+  css:
+    tooltip.css:
+      local: css/tooltip.css
+  js:
+    tooltip.js:
+      local: css/tooltip.js
+2.1.1: null

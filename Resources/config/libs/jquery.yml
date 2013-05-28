@@ -1,0 +1,12 @@
+default:
+  js:
+    jquery.js:
+      local: jquery.js
+      cdn:
+        http: http://ajax.googleapis.com/ajax/libs/jquery/{version}/jquery.min.js
+        https: https://ajax.googleapis.com/ajax/libs/jquery/{version}/jquery.min.js
+    noconflict.js:
+      local: noconflict.js
+1.7.1: null
+1.7.2: null
+1.8.3: null

@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="nilead_loader.loader.class">Nilead\LoaderBundler\Loader</parameter>
+    </parameters>
+
+    <services>
+        <service id="nilead_loader.loader" class="%nilead.loader.loader.class%">
+            <argument>%nilead_loader.settings%</argument>
+            <argument type="service" id="nilead_utility.browser" />
+        </service>
+
+        <service id="nilead_loader.css_loader" class="%nilead_loader.css_loader.class%">
+            <tag name="nilead_loader.handler" alias="css" />
+        </service>
+
+        <service id="nilead_loader.js_loader" class="%nilead_loader.js_loader.class%">
+            <tag name="nilead_loader.handler" alias="js" />
+        </service>
+
+        <service id="nilead_loader.minify" class="%nilead_loader.minify.class%">
+            <argument type="service" id="@cache" />
+            <argument>%nilead_loader.cache_dir%</argument>
+            <argument type="service" id="nilead_utility.file" />
+            <tag name="nilead_loader.filter" alias="minify" />
+        </service>
+
+        <service id="nilead_loader.listener" class="%nilead_loader.listener.class%">
+            <argument type="service" id="nilead_loader.loader" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="nilead_loader.file_locator" class="%liip_theme.file_locator.class%" public="false">
+            <argument type="service" id="kernel" />
+            <argument type="service" id="liip_theme.active_theme" />
+            <argument>%web.dir%</argument>
+            <argument type="collection" />
+            <argument>%nilead_loader.path_patterns%</argument>
+        </service>
+
+    </services>
+
+</container>
