@@ -4,5 +4,5 @@ default:
       local: css/bootstrap.css
   js:
     bootstrap.js:
-      local: css/bootstrap.js
+      local: js/bootstrap.js
 2.0.4: null

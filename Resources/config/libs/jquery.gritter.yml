@@ -1,0 +1,8 @@
+default:
+  css:
+    jquery.gritter.css:
+      local: css/jquery.gritter.css
+  js:
+    jquery.gritter.js:
+      local: js/jquery.gritter.min.js
+1.7.4: null

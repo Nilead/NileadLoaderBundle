@@ -1,0 +1,5 @@
+default:
+  js:
+    masonry.js:
+      local: masonry.js
+2.1.04: null

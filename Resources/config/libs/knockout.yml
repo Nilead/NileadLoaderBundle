@@ -1,0 +1,8 @@
+default:
+  js:
+    knockout.js:
+      local: knockout.js
+      cdn:
+        http: 'http://ajax.aspnetcdn.com/ajax/knockout/knockout-{version}.js'
+        http: 'https://ajax.aspnetcdn.com/ajax/knockout/knockout-{version}.js'
+2.1.0: null

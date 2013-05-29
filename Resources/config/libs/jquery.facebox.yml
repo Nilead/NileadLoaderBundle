@@ -1,0 +1,8 @@
+default:
+  css:
+    facebox.css:
+      local: facebox.cs
+  js:
+    facebox.js:
+      local: facebox.js
+1.3: null

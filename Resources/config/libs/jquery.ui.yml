@@ -1,0 +1,19 @@
+default:
+  css:
+    ui.css:
+      local: ui.css
+      cdn:
+        http: 'http://ajax.googleapis.com/ajax/libs/jqueryui/{version}/themes/base/jquery-ui.css'
+        https: 'http://ajax.googleapis.com/ajax/libs/jqueryui/{version}/themes/base/jquery-ui.css'
+  js:
+    ui.js:
+      local: ui.js
+      cdn:
+        http: 'http://ajax.googleapis.com/ajax/libs/jqueryui/{version}/jquery-ui.min.js'
+        https: 'https://ajax.googleapis.com/ajax/libs/jqueryui/{version}/jquery-ui.min.js'
+1.8.16: null
+1.8.17: null
+1.8.18: null
+1.8.19: null
+1.8.21: null
+1.8.23: null

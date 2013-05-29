@@ -1,0 +1,20 @@
+default:
+  css:
+    jquery.fileupload-ui.css:
+      local: css/jquery.fileupload-ui.css
+  js:
+    tmpl.min.js:
+      local: js/tmpl.min.js
+    jquery.iframe-transport.js:
+      local: js/jquery.iframe-transport.js
+    jquery.fileupload.js:
+      local: js/jquery.fileupload.js
+    jquery.fileupload-fp.js:
+      local: js/jquery.fileupload-fp.js
+    jquery.fileupload-ui.js:
+      local: js/jquery.fileupload-ui.js
+    locale.js:
+      local: js/locale.js
+    main.js:
+      local: js/main.js
+07262012: null

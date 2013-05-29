@@ -1,0 +1,5 @@
+default:
+  js:
+    livequery.js:
+      local: livequery.js
+1.1.1: null

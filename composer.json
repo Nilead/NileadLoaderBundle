@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.*",
-        "mrclay/minify": "dev-master"
+        "mrclay/minify": "dev-master",
+        "liip/doctrine-cache-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Nilead\\LoaderBundle": "" }
@@ -21,7 +22,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.0.x-dev"
+            "dev-master": "0.1.2.x-dev"
         }
     }
 }

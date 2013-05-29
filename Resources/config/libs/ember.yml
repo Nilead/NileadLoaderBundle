@@ -1,0 +1,5 @@
+default:
+  js:
+    ember.js:
+      local: ember.js
+0.9.8.1: null

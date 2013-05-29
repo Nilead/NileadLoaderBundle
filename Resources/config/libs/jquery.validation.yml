@@ -1,0 +1,9 @@
+default:
+  js:
+    validation.js:
+      local: validation.js
+      cdn:
+        http: 'http://ajax.microsoft.com/ajax/jquery.validate/{version}/jquery.validate.min.js'
+        https: 'https://ajax.microsoft.com/ajax/jquery.validate/{version}/jquery.validate.min.js'
+1.7: null
+1.9: null

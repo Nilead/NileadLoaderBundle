@@ -1,0 +1,5 @@
+default:
+  js:
+    includeMany.js:
+      local: includeMany.js
+1.2.2: null

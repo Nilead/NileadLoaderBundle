@@ -13,5 +13,13 @@ namespace Nilead\LoaderBundle\Filter;
 
 interface FlterInterface {
 
-    public function filter($sources, $extension, $options);
+    /**
+     * Filter the resources
+     *
+     * @param array $sources
+     * @param string $type
+     * @param array $options
+     * @return array
+     */
+    public function filter($sources, $type, $destinationFolder, $options);
 }

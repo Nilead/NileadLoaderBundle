@@ -1,0 +1,5 @@
+default:
+  js:
+    ritools.js:
+      local: ritools.js
+1.0: null

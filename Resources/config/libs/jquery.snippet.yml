@@ -1,0 +1,8 @@
+default:
+  css:
+    snippet.css:
+      local: snippet.css
+  js:
+    snippet.js:
+      local: snippet.js
+2.0.0: null

@@ -19,7 +19,10 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->loader = new Loader(array());
+        $processor = $this->getMockBuilder('Nilead\LoaderBundle\Processor')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->loader = new Loader(array(), $processor);
     }
 
 

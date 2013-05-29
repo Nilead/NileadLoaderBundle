@@ -6,26 +6,43 @@
 
     <parameters>
         <parameter key="nilead_loader.loader.class">Nilead\LoaderBundler\Loader</parameter>
+        <parameter key="nilead_loader.processor.class">Nilead\LoaderBundler\Processor</parameter>
+        <parameter key="nilead_loader.css_loader.class">Nilead\LoaderBundler\Handler\CssHandler</parameter>
+        <parameter key="nilead_loader.js_loader.class">Nilead\LoaderBundler\Handler\JsHandler</parameter>
+        <parameter key="nilead_loader.minify.class">Nilead\LoaderBundler\Filter\MinifyFilter</parameter>
+        <parameter key="nilead_loader.listener.class">Nilead\LoaderBundler\EventListener\PageEndListener</parameter>
+        <parameter key="nilead_loader.file_locator.class">Nilead\LoaderBundler\Locator\FileLocator</parameter>
     </parameters>
 
     <services>
         <service id="nilead_loader.loader" class="%nilead.loader.loader.class%">
             <argument>%nilead_loader.settings%</argument>
-            <argument type="service" id="nilead_utility.browser" />
+            <argument type="service" id="nilead_loader.processor" />
+            <argument type="service" id="liip_doctrine_cache.ns.nilead_loader" />
+        </service>
+
+        <service id="nilead_loader.processor" class="%nilead.loader.processor.class%">
+            <argument type="service" id="nilead_utility.collection" />
+            <argument type="service" id="nilead_utility.string" />
+            <argument type="service" id="nilead_loader.file_locator" />
         </service>
 
         <service id="nilead_loader.css_loader" class="%nilead_loader.css_loader.class%">
+            <argument>%web.dir%</argument>
+            <argument>%web.cache_dir%</argument>
+            <argument type="service" id="nilead_utility.file" />
             <tag name="nilead_loader.handler" alias="css" />
         </service>
 
         <service id="nilead_loader.js_loader" class="%nilead_loader.js_loader.class%">
+            <argument>%web.dir%</argument>
+            <argument>%web.cache_dir%</argument>
+            <argument type="service" id="nilead_utility.file" />
             <tag name="nilead_loader.handler" alias="js" />
         </service>
 
+
         <service id="nilead_loader.minify" class="%nilead_loader.minify.class%">
-            <argument type="service" id="@cache" />
-            <argument>%nilead_loader.cache_dir%</argument>
-            <argument type="service" id="nilead_utility.file" />
             <tag name="nilead_loader.filter" alias="minify" />
         </service>
 
@@ -34,7 +51,7 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
-        <service id="nilead_loader.file_locator" class="%liip_theme.file_locator.class%" public="false">
+        <service id="nilead_loader.file_locator" class="%nilead_loader.file_locator.class%" public="false">
             <argument type="service" id="kernel" />
             <argument type="service" id="liip_theme.active_theme" />
             <argument>%web.dir%</argument>

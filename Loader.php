@@ -13,6 +13,7 @@ namespace Nilead\LoaderBundle;
  * All .php files can be manipulated by PHP when they're called, and are copied in-full to the browser page
  */
 
+use Doctrine\Common\Cache\Cache;
 use Symfony\Component\Templating\Helper\Helper;
 
 class Loader extends Helper
@@ -59,10 +60,16 @@ class Loader extends Helper
      */
     protected $filters;
 
-    public function __construct($settings, Processor $processor)
+    /**
+     * @var \Doctrine\Common\Cache\Cache
+     */
+    protected $cache;
+
+    public function __construct($settings, Processor $processor, Cache $cache)
     {
         $this->settings = array_merge($this->settings, $settings);
         $this->processor = $processor;
+        $this->cache = $cache;
     }
 
     /**
@@ -226,26 +233,39 @@ class Loader extends Helper
         // order the files in correct order (according the loader location)
         $orderedFiles = $this->processor->orderFiles($this->files, $matches);
 
-        $processedFiles = $this->processor->processFiles($orderedFiles);
+        $id = md5(serialize($orderedFiles));
 
-        $foundFiles = $this->processor->findFiles($processedFiles);
+        if(($files = $this->cache->fetch($id)) === false) {
+            // cache if necessary
+            $processedFiles = $this->processor->processFiles($orderedFiles);
 
-        foreach ($foundFiles as $type => $locations) {
-            foreach ($locations as $location => $files) {
+            $foundFiles = $this->processor->findFiles($processedFiles);
 
-                $inject_content = $this->getHandler($type)->process($files, $this->filters);
-                // inject
-                switch ($location) {
-                    case 'header':
-                        $content = str_replace('</head>', $inject_content . '</head>', $content);
-                        break;
-                    case 'footer':
-                        $content = str_replace('</body>', $inject_content . '</body>', $content);
-                        break;
-                    default:
-                        $content = str_replace('<!-- loader: ' . $location . ' -->', $inject_content . '<!-- loader: ' . $location . ' -->', $content);
-                        break;
+            $files = array();
+            foreach ($foundFiles as $type => $locations) {
+                foreach ($locations as $location => $files) {
+                    $files[] = array(
+                        'location' => $location,
+                        'inject_content' => $this->getHandler($type)->process($files, $this->filters)
+                    );
                 }
+            }
+
+            $this->cache->save($id, $files);
+        }
+
+        foreach ($files as $file) {
+            // inject
+            switch ($file['location']) {
+                case 'header':
+                    $content = str_replace('</head>', $file['inject_content'] . '</head>', $content);
+                    break;
+                case 'footer':
+                    $content = str_replace('</body>', $file['inject_content'] . '</body>', $content);
+                    break;
+                default:
+                    $content = str_replace('<!-- loader: ' . $file['location'] . ' -->', $file['inject_content'] . '<!-- loader: ' . $file['location'] . ' -->', $content);
+                    break;
             }
         }
 

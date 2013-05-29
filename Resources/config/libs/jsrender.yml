@@ -1,0 +1,5 @@
+default:
+  js:
+    jsrender.js:
+      local: jsrender.js
+1.0pre: null

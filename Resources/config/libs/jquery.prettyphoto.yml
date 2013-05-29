@@ -1,0 +1,8 @@
+default:
+  css:
+    prettyphoto.css:
+      local: prettyphoto.css
+  js:
+    prettyphoto.js:
+      local: prettyphoto.js
+3.1.4: null

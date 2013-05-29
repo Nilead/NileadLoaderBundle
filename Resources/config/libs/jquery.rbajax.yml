@@ -1,0 +1,6 @@
+default:
+  js:
+    rbajax.js:
+      local: rbajax.js
+1.0: null
+2.0: null

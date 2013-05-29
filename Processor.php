@@ -12,6 +12,7 @@ namespace Nilead\LoaderBundle;
 
 
 use Nilead\LoaderBundle\FileSource;
+use Nilead\LoaderBundle\Locator\FileLocator;
 use Nilead\UtilityBundle\Utility\Collection;
 use Nilead\UtilityBundle\Utility\String;
 use Symfony\Component\Yaml\Yaml;
@@ -35,10 +36,17 @@ class Processor
      */
     protected $stringUtility;
 
-    public function __construct(Collection $collectionUtility, String $stringUtility)
+    /**
+     * @var Locator\FileLocator
+     */
+    protected $fileLocator;
+
+    public function __construct(Collection $collectionUtility, String $stringUtility, FileLocator $fileLocator)
     {
         $this->collectionUtility = $collectionUtility;
         $this->stringUtility = $stringUtility;
+        $this->fileLocator = $fileLocator;
+
         $files = Finder::create()
             ->in(__DIR__ . '/Resources/config/libs/')
             ->name('*.yml');
@@ -65,6 +73,8 @@ class Processor
     }
 
     /**
+     * Sort the files according to the location of the loader
+     *
      * @param array $files
      * @param array $loaders
      * @return array
@@ -196,10 +206,10 @@ class Processor
      */
     public function findFiles($processedFiles)
     {
-        foreach ($processedFiles as $processedFile)
+        foreach ($processedFiles as $key => $processedFile)
         {
-            if(FileSource::INLINE == $processedFile['options']['src']) {
-                $this->fileLocator->locate($processedFile['file']);
+            if(FileSource::LOCAL == $processedFile['options']['src']) {
+                $processedFiles[$key]['file'] = $this->fileLocator->locate($processedFile['file']);
             }
         }
         return $processedFiles;

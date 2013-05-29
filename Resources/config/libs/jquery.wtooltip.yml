@@ -1,0 +1,5 @@
+default:
+  js:
+    wtooltip.js:
+      local: wtooltip.js
+1.0.9: null

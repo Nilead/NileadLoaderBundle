@@ -1,0 +1,5 @@
+default:
+  js:
+    cycle.all.js:
+      local: cycle.all.js
+2.76: null

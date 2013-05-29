@@ -1,0 +1,5 @@
+default:
+  js:
+    pure.js:
+      local: pure.js
+2.73: null

@@ -1,0 +1,10 @@
+default:
+  js:
+    isotope.js:
+      local: isotope.js
+    masonry-fix.js:
+      local: masonry-fix.js
+  css:
+    isotope.css:
+      local: isotope.css
+1.5.19: null

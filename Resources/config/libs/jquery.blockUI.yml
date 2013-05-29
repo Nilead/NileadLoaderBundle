@@ -1,0 +1,5 @@
+default:
+  js:
+    blockUI.js:
+      local: blockUI.js
+2.37: null

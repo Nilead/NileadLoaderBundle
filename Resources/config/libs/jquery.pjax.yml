@@ -1,0 +1,5 @@
+default:
+  js:
+    pjax.js:
+      local: pjax.js
+1.0: null

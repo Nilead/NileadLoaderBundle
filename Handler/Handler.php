@@ -10,30 +10,17 @@ abstract class Handler
 
     protected $extension = '';
 
-    protected $host = '';
+    protected $webDir;
 
-    /**
-     *
-     * This function is responsible for loading the files into the array for later parsing
-     *
-     * @param array $files
-     * @param array $loaded_files
-     * @param array $previous_files
-     * @param array $type
-     * @param string $file
-     * @param string $location
-     * @param array $options
-     */
-    public function __construct()
+    protected $cacheDir;
+
+    protected $webRelativeDir;
+
+    public function __construct($webDir, $cacheDir, $fileUtility)
     {
-        global $request_type;
-        if ($request_type == 'SSL') {
-            $this->host = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG;
-        }
-        else {
-            $this->host = HTTP_SERVER . DIR_WS_CATALOG;
-        }
-
+        $this->webDir = $webDir;
+        $this->cacheDir = $cacheDir;
+        $this->webRelativeDir = $fileUtility->getRelativePath($this->cacheDir, $this->webDir);
     }
 
     /**
@@ -115,12 +102,9 @@ abstract class Handler
         $filteredFiles = array();
         if (!empty($to_load)) {
             foreach ($filters as $filter) {
-                $filteredFiles = $filter['filter']->filter($to_load, $this->extension, $filter['options']);
+                $filteredFiles = $filter['filter']->filter($to_load, $this->extension, $this->cacheDir, $filter['options']);
             }
 
-            foreach ($filteredFiles as $key => $value) {
-                $filteredFiles[$key] = $this->host . $value;
-            }
             $to_load = array();
         }
         return !empty($filteredFiles) ? $filteredFiles : false;
