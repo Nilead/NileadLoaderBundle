@@ -78,9 +78,9 @@ class Loader extends Helper
      */
     public function setFilter($id, $filter)
     {
-        if (isset($this->settings['filters'][$id])) {
+//        if (isset($this->settings['filters'][$id])) {
             $this->filters[$id] = array('filter' => $filter, 'options' => $this->settings['filters'][$id]);
-        }
+//        }
     }
 
     /**
@@ -97,12 +97,13 @@ class Loader extends Helper
      */
     public function setHandler($id, $handler)
     {
-        if (isset($this->settings['handlers']) && in_array($id, $this->settings['handlers'])) {
+//        if (isset($this->settings['handlers']) && in_array($id, $this->settings['handlers'])) {
             $this->handlers[$id] = $handler;
-        }
+//        }
     }
 
     /**
+     * TODO: add exception check
      * @param $type
      * @return mixed
      */
@@ -243,10 +244,10 @@ class Loader extends Helper
 
             $files = array();
             foreach ($foundFiles as $type => $locations) {
-                foreach ($locations as $location => $files) {
+                foreach ($locations as $location => $_files) {
                     $files[] = array(
                         'location' => $location,
-                        'inject_content' => $this->getHandler($type)->process($files, $this->filters)
+                        'inject_content' => $this->getHandler($type)->process($_files, $this->filters)
                     );
                 }
             }

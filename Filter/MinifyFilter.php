@@ -23,7 +23,7 @@ class MinifyFilter implements FilterInterface
                 }
 
                 if (file_exists($destination_file)) {
-                    $files[] = $destination_file;
+                    $files[] = $cacheFilename;
                 }
             }
         } else {
@@ -36,7 +36,7 @@ class MinifyFilter implements FilterInterface
             }
 
             if (file_exists($destination_file)) {
-                $files[] = $destination_file;
+                $files[] = $cacheFilename;
             }
         }
 

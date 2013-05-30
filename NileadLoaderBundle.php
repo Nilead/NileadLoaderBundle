@@ -13,7 +13,8 @@
 
 namespace Nilead\LoaderBundle;
 
-use Sylius\Bundle\ResourceBundle\DependencyInjection\Compiler\ResolveDoctrineTargetEntitiesPass;
+use Nilead\LoaderBundle\DependencyInjection\Compiler\FilterPass;
+use Nilead\LoaderBundle\DependencyInjection\Compiler\HandlerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -23,4 +24,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class NileadLoaderBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new FilterPass());
+        $container->addCompilerPass(new HandlerPass());
+    }
 }

@@ -11,7 +11,7 @@
 namespace Nilead\LoaderBundle\Filter;
 
 
-interface FlterInterface {
+interface FilterInterface {
 
     /**
      * Filter the resources

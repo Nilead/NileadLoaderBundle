@@ -18,8 +18,8 @@ class FilterPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if ($container->hasDefinition('nilead_loader.loader_helper')) {
-            $definition = $container->getDefinition('nilead_loader.loader_helper');
+        if ($container->hasDefinition('nilead_loader.loader')) {
+            $definition = $container->getDefinition('nilead_loader.loader');
             foreach ($container->findTaggedServiceIds('nilead_loader.filter') as $id => $attributes) {
                 if (isset($attributes[0]['alias'])) {
                     $definition->addMethodCall('setFilter', array($attributes[0]['alias'], new Reference($id)));

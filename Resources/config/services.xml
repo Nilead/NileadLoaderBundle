@@ -5,23 +5,23 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="nilead_loader.loader.class">Nilead\LoaderBundler\Loader</parameter>
-        <parameter key="nilead_loader.processor.class">Nilead\LoaderBundler\Processor</parameter>
-        <parameter key="nilead_loader.css_loader.class">Nilead\LoaderBundler\Handler\CssHandler</parameter>
-        <parameter key="nilead_loader.js_loader.class">Nilead\LoaderBundler\Handler\JsHandler</parameter>
-        <parameter key="nilead_loader.minify.class">Nilead\LoaderBundler\Filter\MinifyFilter</parameter>
-        <parameter key="nilead_loader.listener.class">Nilead\LoaderBundler\EventListener\OnResponseListener</parameter>
-        <parameter key="nilead_loader.file_locator.class">Nilead\LoaderBundler\Locator\FileLocator</parameter>
+        <parameter key="nilead_loader.loader.class">Nilead\LoaderBundle\Loader</parameter>
+        <parameter key="nilead_loader.processor.class">Nilead\LoaderBundle\Processor</parameter>
+        <parameter key="nilead_loader.css_loader.class">Nilead\LoaderBundle\Handler\CssHandler</parameter>
+        <parameter key="nilead_loader.js_loader.class">Nilead\LoaderBundle\Handler\JsHandler</parameter>
+        <parameter key="nilead_loader.minify.class">Nilead\LoaderBundle\Filter\MinifyFilter</parameter>
+        <parameter key="nilead_loader.listener.class">Nilead\LoaderBundle\EventListener\OnResponseListener</parameter>
+        <parameter key="nilead_loader.file_locator.class">Nilead\LoaderBundle\Locator\FileLocator</parameter>
     </parameters>
 
     <services>
-        <service id="nilead_loader.loader" class="%nilead.loader.loader.class%">
+        <service id="nilead_loader.loader" class="%nilead_loader.loader.class%">
             <argument>%nilead_loader.settings%</argument>
             <argument type="service" id="nilead_loader.processor" />
             <argument type="service" id="liip_doctrine_cache.ns.nilead_loader" />
         </service>
 
-        <service id="nilead_loader.processor" class="%nilead.loader.processor.class%">
+        <service id="nilead_loader.processor" class="%nilead_loader.processor.class%">
             <argument type="service" id="nilead_utility.collection" />
             <argument type="service" id="nilead_utility.string" />
             <argument type="service" id="nilead_loader.file_locator" />

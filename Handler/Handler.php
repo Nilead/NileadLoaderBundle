@@ -20,7 +20,7 @@ abstract class Handler
     {
         $this->webDir = $webDir;
         $this->cacheDir = $cacheDir;
-        $this->webRelativeDir = $fileUtility->getRelativePath($this->cacheDir, $this->webDir);
+        $this->webRelativeDir = $fileUtility->getRelativePath($this->webDir, $this->cacheDir);
     }
 
     /**
@@ -48,23 +48,22 @@ abstract class Handler
 
         $to_load = array();
 
-        foreach ($files as $file => $options) {
-
-            switch ($options['src']) {
+        foreach ($files as $file) {
+            switch ($file['options']['src']) {
                 case FileSource::EXTERNAL:
                     // if the inject content is not empty, we should push it into 1 file to cache
                     $this->filterFiles($to_load, $filters);
-
-                    printf($this->filePattern, $file);
+                    printf($this->filePattern, $file['file']);
                     break;
                 case FileSource::INLINE:
                     // if we encounter inline, we must first print out the other local files requested before it
                     $this->filterFiles($to_load, $filters);
 
-                    echo $options['inline'];
+                    echo $file['options']['inline'];
                     break;
                 default:
-                    $to_load[] = $file;
+                    $to_load[] = $file['file'];
+                    break;
 
             }
 
@@ -74,19 +73,6 @@ abstract class Handler
         $result = ob_get_clean();
 
         return $result;
-    }
-
-    /**
-     * @param $to_load
-     * @param $filters
-     */
-    protected function filterFiles($to_load, $filters)
-    {
-        if (!empty($to_load) && ($filteredFiles = $this->filter($to_load, $filters)) !== false) {
-            foreach ($filteredFiles as $filteredFile) {
-                printf($this->filePattern, $filteredFile);
-            }
-        }
     }
 
     /**
@@ -103,6 +89,10 @@ abstract class Handler
         if (!empty($to_load)) {
             foreach ($filters as $filter) {
                 $filteredFiles = $filter['filter']->filter($to_load, $this->extension, $this->cacheDir, $filter['options']);
+            }
+
+            foreach ($filteredFiles as $key => $val) {
+                $filteredFiles[$key] = $this->webRelativeDir . '/' . $val;
             }
 
             $to_load = array();

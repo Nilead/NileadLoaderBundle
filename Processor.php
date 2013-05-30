@@ -161,7 +161,7 @@ class Processor
                                     foreach ($files as $_file => $_file_options) {
                                         if ($useCDN && isset($_file_options['cdn'])) {
                                             $file = $useSSL ? $_file_options['cdn']['https'] : $_file_options['cdn']['http'];
-                                            $processedFiles[] = array('file' => $file, 'location' => $location, 'options' => array('ext' => $ext, 'src' => FileSource::EXTERNAL));
+                                            $processedFiles[$ext][$location][] = array('file' => $file, 'options' => array('ext' => $ext, 'src' => FileSource::EXTERNAL));
                                         } else {
                                             if (strpos($_file_options['local'], ":") !== false) {
                                                 $local = explode(":", $_file_options['local']);
@@ -172,13 +172,13 @@ class Processor
 
                                                 $file = $local[0] . ':' . $local[1] . ':' . $lib . '/' . $lib_version . '/' . $local[2];
                                             } else {
-                                                $file = 'LoaderBundle:libs/' . $lib . '/' . $lib_version . '/' . (!empty($_file_options['local']) ? $_file_options['local'] : $_file);
+                                                $file = '@NileadLoaderBundle/Resources/public/libs/' . $lib . '/' . $lib_version . '/' . (!empty($_file_options['local']) ? $_file_options['local'] : $_file);
                                             }
 
                                             if(!isset($options['src'])) {
                                                 $options['src'] = FileSource::LOCAL;
                                             }
-                                            $processedFiles[] = array('file' => $file, 'location' => $location, 'options' => $options);
+                                            $processedFiles[$ext][$location][] = array('file' => $file, 'options' => $options);
                                         }
                                     }
                                 }
@@ -189,7 +189,7 @@ class Processor
                         if(!isset($options['src'])) {
                             $options['src'] = FileSource::LOCAL;
                         }
-                        $processedFiles[] = array('file' => $file, 'location' => $location, 'options' => $options);
+                        $processedFiles[$options['ext']][$location][] = array('file' => $file, 'options' => $options);
                         break;
                 }
             }
@@ -206,10 +206,14 @@ class Processor
      */
     public function findFiles($processedFiles)
     {
-        foreach ($processedFiles as $key => $processedFile)
+        foreach ($processedFiles as $type => $locations)
         {
-            if(FileSource::LOCAL == $processedFile['options']['src']) {
-                $processedFiles[$key]['file'] = $this->fileLocator->locate($processedFile['file']);
+            foreach ($locations as $location => $files) {
+                foreach ($files as $index => $file) {
+                    if(FileSource::LOCAL == $file['options']['src']) {
+                        $processedFiles[$type][$location][$index]['file'] = $this->fileLocator->locate($file['file']);
+                    }
+                }
             }
         }
         return $processedFiles;
