@@ -228,45 +228,47 @@ class Loader extends Helper
     {
         $content = $this->parseContent($content);
 
-        // scan the content to find out the real order of the loader
-        preg_match_all("/(<!-- loader:)(.*?)(-->)/", $content, $matches, PREG_SET_ORDER);
+        if (!empty($this->files)) {die("aaa");
+            // scan the content to find out the real order of the loader
+            preg_match_all("/(<!-- loader:)(.*?)(-->)/", $content, $matches, PREG_SET_ORDER);
 
-        // order the files in correct order (according the loader location)
-        $orderedFiles = $this->processor->orderFiles($this->files, $matches);
+            // order the files in correct order (according the loader location)
+            $orderedFiles = $this->processor->orderFiles($this->files, $matches);
 
-        $id = md5(serialize($orderedFiles));
+            $id = md5(serialize($orderedFiles));
 
-        if(($files = $this->cache->fetch($id)) === false) {
-            // cache if necessary
-            $processedFiles = $this->processor->processFiles($orderedFiles);
+            if(($files = $this->cache->fetch($id)) === false) {
+                // cache if necessary
+                $processedFiles = $this->processor->processFiles($orderedFiles);
 
-            $foundFiles = $this->processor->findFiles($processedFiles);
+                $foundFiles = $this->processor->findFiles($processedFiles);
 
-            $files = array();
-            foreach ($foundFiles as $type => $locations) {
-                foreach ($locations as $location => $_files) {
-                    $files[] = array(
-                        'location' => $location,
-                        'inject_content' => $this->getHandler($type)->process($_files, $this->filters)
-                    );
+                $files = array();
+                foreach ($foundFiles as $type => $locations) {
+                    foreach ($locations as $location => $_files) {
+                        $files[] = array(
+                            'location' => $location,
+                            'inject_content' => $this->getHandler($type)->process($_files, $this->filters)
+                        );
+                    }
                 }
+
+                $this->cache->save($id, $files);
             }
 
-            $this->cache->save($id, $files);
-        }
-
-        foreach ($files as $file) {
-            // inject
-            switch ($file['location']) {
-                case 'header':
-                    $content = str_replace('</head>', $file['inject_content'] . '</head>', $content);
-                    break;
-                case 'footer':
-                    $content = str_replace('</body>', $file['inject_content'] . '</body>', $content);
-                    break;
-                default:
-                    $content = str_replace('<!-- loader: ' . $file['location'] . ' -->', $file['inject_content'] . '<!-- loader: ' . $file['location'] . ' -->', $content);
-                    break;
+            foreach ($files as $file) {
+                // inject
+                switch ($file['location']) {
+                    case 'header':
+                        $content = str_replace('</head>', $file['inject_content'] . '</head>', $content);
+                        break;
+                    case 'footer':
+                        $content = str_replace('</body>', $file['inject_content'] . '</body>', $content);
+                        break;
+                    default:
+                        $content = str_replace('<!-- loader: ' . $file['location'] . ' -->', $file['inject_content'] . '<!-- loader: ' . $file['location'] . ' -->', $content);
+                        break;
+                }
             }
         }
 
