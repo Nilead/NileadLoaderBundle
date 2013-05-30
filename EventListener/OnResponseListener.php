@@ -11,10 +11,10 @@
 namespace Nilead\LoaderBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Nilead\CoreBundle\Events;
-use Nilead\CoreBundle\Event\CoreEvent;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
-class PageEndListener implements EventSubscriberInterface
+class OnResponseListener implements EventSubscriberInterface
 {
     protected $loader;
 
@@ -23,7 +23,7 @@ class PageEndListener implements EventSubscriberInterface
         $this->loader = $loader;
     }
 
-    public function onPageEnd(CoreEvent $event)
+    public function onResponse(KernelEvent $event)
     {
         $event->getResponse()->setContent($this->loader->injectAssets($event->getResponse()->getContent()));
     }
@@ -31,7 +31,7 @@ class PageEndListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            Events::onPageEnd => array('onPageEnd', -9999),
+            KernelEvents::RESPONSE => array('onResponse', -9999),
         );
     }
 }

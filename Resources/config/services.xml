@@ -10,7 +10,7 @@
         <parameter key="nilead_loader.css_loader.class">Nilead\LoaderBundler\Handler\CssHandler</parameter>
         <parameter key="nilead_loader.js_loader.class">Nilead\LoaderBundler\Handler\JsHandler</parameter>
         <parameter key="nilead_loader.minify.class">Nilead\LoaderBundler\Filter\MinifyFilter</parameter>
-        <parameter key="nilead_loader.listener.class">Nilead\LoaderBundler\EventListener\PageEndListener</parameter>
+        <parameter key="nilead_loader.listener.class">Nilead\LoaderBundler\EventListener\OnResponseListener</parameter>
         <parameter key="nilead_loader.file_locator.class">Nilead\LoaderBundler\Locator\FileLocator</parameter>
     </parameters>
 
