@@ -34,7 +34,11 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
                 )
             ))));
 
-        $this->processor = new Processor($collectionUtility, $stringUtility);
+        $fileLocator = $this->getMockBuilder('Nilead\LoaderBundle\Locator\FileLocator')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->processor = new Processor($collectionUtility, $stringUtility, $fileLocator);
     }
 
 
@@ -67,22 +71,24 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         ));
 
         $this->assertEquals($processedFiles, array(
-            array(
-                'file' => 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js',
-                'location' => 1,
-                'options' => array(
-                    'ext' => 'js',
-                    'src' => 'external'
-                )
-            ),
-            array(
-                'file' => 'xyz.js',
-                'location' => 1,
-                'options' => array(
-                    'ext' => 'js',
-                    'min' => 1,
-                    'max' => 2,
-                    'src' => 'local'
+            'js' => array(
+                '1' => array(
+                    array(
+                        'file' => 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js',
+                        'options' => array(
+                            'ext' => 'js',
+                            'src' => 'external'
+                        )
+                    ),
+                    array(
+                        'file' => 'xyz.js',
+                        'options' => array(
+                            'ext' => 'js',
+                            'min' => 1,
+                            'max' => 2,
+                            'src' => 'local'
+                        )
+                    )
                 )
             )
         ));

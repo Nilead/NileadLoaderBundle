@@ -22,7 +22,10 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $processor = $this->getMockBuilder('Nilead\LoaderBundle\Processor')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->loader = new Loader(array(), $processor);
+
+        $cache = $this->getMock('Doctrine\Common\Cache\Cache');
+
+        $this->loader = new Loader(array(), $processor, $cache);
     }
 
 
