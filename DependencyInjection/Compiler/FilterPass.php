@@ -22,7 +22,7 @@ class FilterPass implements CompilerPassInterface
             $definition = $container->getDefinition('nilead_loader.loader');
             foreach ($container->findTaggedServiceIds('nilead_loader.filter') as $id => $attributes) {
                 if (isset($attributes[0]['alias'])) {
-                    $definition->addMethodCall('setFilter', array($attributes[0]['alias'], new Reference($id)));
+                    $definition->addMethodCall('addFilter', array($attributes[0]['alias'], new Reference($id)));
                 }
             }
         }

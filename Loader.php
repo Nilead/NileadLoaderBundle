@@ -76,7 +76,7 @@ class Loader extends Helper
      * @param $id
      * @param $filter
      */
-    public function setFilter($id, $filter)
+    public function addFilter($id, $filter)
     {
 //        if (isset($this->settings['filters'][$id])) {
             $this->filters[$id] = array('filter' => $filter, 'options' => $this->settings['filters'][$id]);
@@ -228,7 +228,7 @@ class Loader extends Helper
     {
         $content = $this->parseContent($content);
 
-        if (!empty($this->files)) {die("aaa");
+        if (!empty($this->files)) {
             // scan the content to find out the real order of the loader
             preg_match_all("/(<!-- loader:)(.*?)(-->)/", $content, $matches, PREG_SET_ORDER);
 

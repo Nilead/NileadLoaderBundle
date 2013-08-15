@@ -22,22 +22,22 @@
         </service>
 
         <service id="nilead_loader.processor" class="%nilead_loader.processor.class%">
-            <argument type="service" id="nilead_utility.collection" />
-            <argument type="service" id="nilead_utility.string" />
+            <argument type="service" id="nilead.utility.collection" />
+            <argument type="service" id="nilead.utility.string" />
             <argument type="service" id="nilead_loader.file_locator" />
         </service>
 
         <service id="nilead_loader.css_loader" class="%nilead_loader.css_loader.class%">
             <argument>%web.dir%</argument>
             <argument>%web.cache_dir%</argument>
-            <argument type="service" id="nilead_utility.file" />
+            <argument type="service" id="nilead.utility.file" />
             <tag name="nilead_loader.handler" alias="css" />
         </service>
 
         <service id="nilead_loader.js_loader" class="%nilead_loader.js_loader.class%">
             <argument>%web.dir%</argument>
             <argument>%web.cache_dir%</argument>
-            <argument type="service" id="nilead_utility.file" />
+            <argument type="service" id="nilead.utility.file" />
             <tag name="nilead_loader.handler" alias="js" />
         </service>
 
