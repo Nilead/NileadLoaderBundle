@@ -5,6 +5,10 @@ namespace Nilead\LoaderBundle\Filter;
 
 class MinifyFilter implements FilterInterface
 {
+//    public function __construct()
+//    {
+//        die ("blah");
+//    }
     /**
      * {@inheritdoc}
      */

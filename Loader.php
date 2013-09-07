@@ -95,7 +95,7 @@ class Loader extends Helper
      * @param $id
      * @param $handler
      */
-    public function setHandler($id, $handler)
+    public function addHandler($id, $handler)
     {
 //        if (isset($this->settings['handlers']) && in_array($id, $this->settings['handlers'])) {
             $this->handlers[$id] = $handler;

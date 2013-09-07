@@ -22,7 +22,7 @@ class HandlerPass implements CompilerPassInterface
             $definition = $container->getDefinition('nilead_loader.loader');
             foreach ($container->findTaggedServiceIds('nilead_loader.handler') as $id => $attributes) {
                 if (isset($attributes[0]['alias'])) {
-                    $definition->addMethodCall('setHandler', array($attributes[0]['alias'], new Reference($id)));
+                    $definition->addMethodCall('addHandler', array($attributes[0]['alias'], new Reference($id)));
                 }
             }
         }
