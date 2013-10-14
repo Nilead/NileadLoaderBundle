@@ -16,14 +16,14 @@ interface BrowserInterface{
 
     /**
      * checks if the browser is IE, FF, Chrome etc
-     * @string $browser_name
+     * @param string $browser_name
      * @return boolean
      */
     public function isBrowser($browser_name);
 
     /**
      * gets the version of the browser
-     * @string $browser_name
+     * @param string $browser_name
      * @return string
      */
     public function getVersion();
